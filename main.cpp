@@ -2,8 +2,18 @@
 #include "SDL/SDL_opengl.h"
 #include <stdio.h>
 
-int main (int arg,char* args[])
-{
+bool running = true;
+SDL_Event events;
+
+
+//Quit of game
+void exitGame(){
+	running = false;
+}
+
+
+int main (int arg,char* args[]){
+
     SDL_Init(SDL_INIT_EVERYTHING);
 
     // memory
@@ -39,19 +49,41 @@ int main (int arg,char* args[])
  	glDisable(GL_DEPTH_TEST);
 
 
+ 	
 
- 	//Logic 
+ 	//Loop game
+ 	while(running){
+
+ 		//Event
+ 		while(SDL_PollEvent(&events)){
+
+ 			//Close screem
+ 			if(events.type == SDL_QUIT || (events.type == SDL_KEYUP && events.key.keysym.sym == SDLK_ESCAPE) ) {
+ 				exitGame();
+ 			}
+			
+ 		}
+
+ 	 	//Logic 
+
+
+	 	//clear buffer
+ 		glClear(GL_COLOR_BUFFER_BIT);
+ 		SDL_GL_SwapBuffers();
+
+ 	}
+
+
 
 
 
  	//Renderização
-
- 	//clear buffer
- 	glClear(GL_COLOR_BUFFER_BIT);
- 	SDL_GL_SwapBuffers();
-
-
-    SDL_Delay(5000);
     SDL_Quit();
     return 0;
 }
+
+
+
+
+
+
