@@ -19,6 +19,8 @@ float birdSpeedXX = 0.4;
 float sunSpeedy = 0.2;
 float jumpeAlt = 0;
 
+int creditos = 0;
+
 int noite = 0;
 
 float MaxX = 600;
@@ -221,6 +223,8 @@ void blocoFlag(float x, float y){
 	glVertex2f(x+50,y);
 	glVertex2f(x+50,y-40);
     glEnd();
+
+    glColor4ub(0,255,0,255);
 
     glBegin(GL_TRIANGLES);
 
@@ -457,11 +461,30 @@ void sunMove(){
 	}		
 }
 
+void endGame(){
+
+}
+
+
+void creditsIn(){
+	creditos +=1;
+}
+void creditsOut(){
+	creditos -=1;
+}
+
 void morrer(){
 	avatarX = 300;
 	avatarY = 380;
 	jumpeAlt = 0;
+	jumperUP = false;
+	if(creditos <= 0){
+		endGame();
+	}else {
+		creditsOut();
+	}
 }
+
 
 void birds(){
  		
@@ -470,6 +493,16 @@ void birds(){
  	bird(passaros[2].x,passaros[2].y,0);
  	bird(passaros[3].x,passaros[3].y,0);
  	bird(passaros[4].x,passaros[4].y,0);
+}
+
+
+void cloud(){
+
+	glBegin(GL_POLYGON);
+	    glVertex2f(MaxX,floor_level);
+    	glVertex2f(0,floor_level);   
+    	glVertex2f(300,0);
+	glEnd();
 }
 
 
@@ -497,11 +530,11 @@ void start(){
  		sunMove();
 
  		//Colisao passaros
- 		/*for(int index=0;index < 5; index ++){
+ 		for(int index=0;index < 5; index ++){
 			if(collision(avatarX,avatarY,10,avatayHaltura,passaros[index].x,passaros[index].y,1,1) ){
 				morrer();
 			}	
- 		}*/
+ 		}
 
  		//Subir Blocos
  		
@@ -537,13 +570,13 @@ void start(){
  		glOrtho(0,MaxX,MaxY,0,-1,1);
  		//glColor4ub(255,0,0,255);
 
-
  		sky();
 
  		//sol
  		sun();
 
  		//cloud
+ 		cloud();
 
  		//Mountaines
  		mountain();
@@ -585,10 +618,6 @@ void initGame(){
  		while(SDL_PollEvent(&events)){
 			
  		}
-
-
-
-
 	}	
 }
 
