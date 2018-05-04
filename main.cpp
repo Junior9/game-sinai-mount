@@ -157,7 +157,7 @@ void walk(){
 
 // GL_POINTS, GL_LINES, GL_LINES_LOOP, GL_QUADS, GL_TRIANGULES, GL_POLIGNON
 void DrawCircle(float cx, float cy, float r, int num_segments) {
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_POLYGON);
     for (int ii = 0; ii < num_segments; ii++)   {
         float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle 
         float x = r * cosf(theta);//calculate the x component 
